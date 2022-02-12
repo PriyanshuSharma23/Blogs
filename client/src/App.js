@@ -27,7 +27,7 @@ export default function App() {
         </Route>
         <Route path="/register" component={Register} />
         <Route exact path="/">
-          <MainPage isLogged={isLogged} setIsLogged={setIsLogged}/>
+          <MainPage isLogged={isLogged} currUser = {currUser} setCurrUser = {setCurrUser} setIsLogged={setIsLogged}/>
         </Route>
       </Switch>
     </div>

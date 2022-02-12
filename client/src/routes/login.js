@@ -53,8 +53,8 @@ function Login({ isLogged, setIsLogged }) {
         <div>
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
-                <input type="text" value={username} onChange={function (e) { setUserName(e ? e.target.value : '') }} />
-                <input type="password" value={password} onChange={function (e) { setPassword(e ? e.target.value : '') }} />
+                <input placeholder = {"enter username"}type="text" value={username} onChange={function (e) { setUserName(e ? e.target.value : '') }} />
+                <input placeholder = {"enter password"}type="password" value={password} onChange={function (e) { setPassword(e ? e.target.value : '') }} />
                 <button type="submit">Submit</button>
             </form>
 

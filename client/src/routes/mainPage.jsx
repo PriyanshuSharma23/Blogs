@@ -2,10 +2,10 @@ import { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import { backend_uri } from "../App"
 
-export default function MainPage({ isLogged, setIsLogged }) {
+export default function MainPage({ isLogged, setIsLogged, currUser, setCurrUser }) {
 
     let history = useHistory()
-    const [currUser, setCurrUser] = useState(null)
+    // const [currUser, setCurrUser] = useState(null)
 
     useEffect(async function () {
         if (!isLogged) { history.push('/login'); return; }

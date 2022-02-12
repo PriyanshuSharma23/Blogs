@@ -28,6 +28,10 @@ const uri = `mongodb+srv://Priyanshu:${process.env.PASSWORD}@cluster0.kpkbu.mong
             if (!Boolean(res)) return false;
             if (res.password == user.password) return true
             else return false
+        },
+        getUser: async function (username) {
+            const res = await this.client.db(database.name).collection(database.collections[0]).findOne({username: username}, {password: false})
+            return res;
         }
     }
 

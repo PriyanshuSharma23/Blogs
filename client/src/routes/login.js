@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { BrowserRouter, useHistory } from "react-router-dom";
+import { backend_uri } from "../App";
 
-const backend_uri = "http://localhost:5000"
 
-function Login() {
+function Login({ isLogged, setIsLogged }) {
 
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('')
@@ -11,7 +12,8 @@ function Login() {
     const [usernameErr, setUserNameErr] = useState(false);
     const [passwordErr, setPasswordErr] = useState(false);
 
-
+    const [incorrectCred, setIncorrectCred] = useState(false)
+    let history = useHistory();
     async function handleSubmit(e) {
         e.preventDefault();
         if (!username) { setUserNameErr(true); return }
@@ -32,25 +34,36 @@ function Login() {
 
         if (res.ok) {
             localStorage.setItem("loggedUser", username)
+            setIsLogged(true)
+            history.push('/')
+        } else {
+            setIncorrectCred(true);
         }
 
 
-
     }
+    useEffect(function () {
 
-    return <div>
-        <h1>Login</h1>
-        <form onSubmit={handleSubmit}>
-            <input type="text" value={username} onChange={function (e) { setUserName(e ? e.target.value : '') }} />
-            <input type="password" value={password} onChange={function (e) { setPassword(e ? e.target.value : '') }} />
-            <button type="submit">Submit</button>
-        </form>
+        if (isLogged) history.push('/')
 
-        {usernameErr && <p>Username can't be empty</p>}
-        {passwordErr && <p>Password can't be empty</p>}
-        {/* {userAlreadyExists && <p>User Already exists</p>} */}
+    }, [])
 
-    </div>
+    return <BrowserRouter>
+
+        <div>
+            <h1>Login</h1>
+            <form onSubmit={handleSubmit}>
+                <input type="text" value={username} onChange={function (e) { setUserName(e ? e.target.value : '') }} />
+                <input type="password" value={password} onChange={function (e) { setPassword(e ? e.target.value : '') }} />
+                <button type="submit">Submit</button>
+            </form>
+
+            <button onClick={() => { history.push('/register') }}>Register</button>
+            {usernameErr && <p>Username can't be empty</p>}
+            {passwordErr && <p>Password can't be empty</p>}
+            {incorrectCred && <p>Either username or password is incorrect</p>}
+        </div>
+    </BrowserRouter>
 }
 
 export default Login;

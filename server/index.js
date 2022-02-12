@@ -43,7 +43,21 @@ app.post("/login", async function (req, res) {
 
     console.log(valid);
     if (valid) res.sendStatus(200)
-    else res.sendStatus(500) 
+    else res.sendStatus(500)
+})
+
+app.get("/fetchUser", async function (req, res) {
+    await Client.client.connect();
+    let reqData = req.query;
+
+    let user = await Client.getUser(reqData.username);
+    if (user) {
+        user.password = null
+
+        res.json({
+            ...user
+        })
+    }
 })
 
 app.listen(5000, console.log("App hosted at port", 5000));

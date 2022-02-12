@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { backend_uri } from "../App";
 
-const backend_uri = "http://localhost:5000"
 
 function Register() {
 
@@ -9,6 +10,8 @@ function Register() {
 
     const [usernameErr, setUserNameErr] = useState(false);
     const [passwordErr, setPasswordErr] = useState(false);
+
+    let history = useHistory();
 
     const [userAlreadyExists, setUserAlreadyExists] = useState(false);
     /** 
@@ -44,6 +47,8 @@ function Register() {
         setPasswordErr(false)
         setUserNameErr(false)
         setUserAlreadyExists(false)
+
+        history.push("/login")
     }
 
     return (
@@ -54,6 +59,8 @@ function Register() {
                 <input type="password" value={password} onChange={function (e) { setPassword(e ? e.target.value : '') }} />
                 <button type="submit">Submit</button>
             </form>
+            <button onClick={()=>{history.push('/login')}}>Login</button>
+
             {usernameErr && <p>Username can't be empty</p>}
             {passwordErr && <p>Password can't be empty</p>}
             {userAlreadyExists && <p>User Already exists</p>}
